@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>修改預約</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+
+<div class="container col-6">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h3>📝 修改預約</h3>
+        <div>
+            <span class="me-3">👤 {{ username }} （{{ "管理員" if role=='admin' else "使用者" }}）</span>
+            <a href="/logout" class="btn btn-danger btn-sm">登出</a>
+        </div>
+    </div>
+
+    {% with messages=get_flashed_messages() %}
+        {% if messages %}
+            <div class="alert alert-warning">{{ messages[0] }}</div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/update/{{ booking.id }}" class="card p-4 shadow">
+
+        <label class="form-label">預約名稱：</label>
+        <input type="text" name="name" value="{{ booking.name }}" class="form-control mb-3" required>
+
+        <label class="form-label">日期：</label>
+        <input type="date" name="date" value="{{ booking.date }}" class="form-control mb-3" required>
+
+        <label class="form-label">開始時間：</label>
+        <select name="start_time" class="form-select mb-3">
+            {% for h in range(0,24) %}
+                <option value="{{ "%02d:00" % h }}" {% if booking.start_time == "%02d:00" % h %}selected{% endif %}>{{ "%02d:00" % h }}</option>
+                <option value="{{ "%02d:30" % h }}" {% if booking.start_time == "%02d:30" % h %}selected{% endif %}>{{ "%02d:30" % h }}</option>
+            {% endfor %}
+        </select>
+
+        <label class="form-label">結束時間：</label>
+        <select name="end_time" class="form-select mb-4">
+            {% for h in range(0,24) %}
+                <option value="{{ "%02d:00" % h }}" {% if booking.end_time == "%02d:00" % h %}selected{% endif %}>{{ "%02d:00" % h }}</option>
+                <option value="{{ "%02d:30" % h }}" {% if booking.end_time == "%02d:30" % h %}selected{% endif %}>{{ "%02d:30" % h }}</option>
+            {% endfor %}
+        </select>
+
+        <button class="btn btn-primary w-100">確認修改</button>
+    </form>
+
+    <div class="text-center mt-3">
+        <a href="/list" class="btn btn-secondary">返回列表</a>
+    </div>
+
+</div>
+
+</body>
+</html>

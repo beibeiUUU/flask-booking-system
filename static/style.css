@@ -1,38 +1,14 @@
 body {
     font-family: Arial;
-    width: 500px;
-    margin: auto;
-    padding-top: 20px;
-}
-
-form, table {
-    width: 100%;
-    margin-top: 20px;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    padding: 20px;
 }
 
 table {
     border-collapse: collapse;
+    width: 60%;
 }
 
 th, td {
-    border: 1px solid #999;
-    padding: 10px;
-}
-
-.msg {
-    background: #ffd;
-    padding: 10px;
-    border: 1px solid #aa0;
+    padding: 8px;
+    text-align: center;
 }

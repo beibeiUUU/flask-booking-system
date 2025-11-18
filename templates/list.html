@@ -3,61 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>預約列表</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body class="p-4">
+<body>
+<div class="container wide">
+    <h2>預約列表</h2>
 
-<div class="container col-10">
-
-    <div class="d-flex justify-content-between mb-4">
-        <h3>📅 預約列表</h3>
-        <div>
-            <span class="me-3">👤 {{ username }} （{{ "管理員" if role=='admin' else "使用者" }}）</span>
-            <a href="/" class="btn btn-primary btn-sm me-2">新增預約</a>
-            <a href="/logout" class="btn btn-danger btn-sm">登出</a>
-        </div>
-    </div>
-
-    {% with messages=get_flashed_messages() %}
+    {% with messages = get_flashed_messages() %}
         {% if messages %}
-            <div class="alert alert-info">{{ messages[0] }}</div>
+            <p class="msg">{{ messages[0] }}</p>
         {% endif %}
     {% endwith %}
 
-    <table class="table table-bordered table-striped shadow">
-        <thead class="table-dark">
-            <tr>
-                <th>預約名稱</th>
-                <th>使用者</th>
-                <th>日期</th>
-                <th>開始</th>
-                <th>結束</th>
-                <th width="200">操作</th>
-            </tr>
-        </thead>
-
-        <tbody>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>使用者</th>
+            <th>名稱</th>
+            <th>日期</th>
+            <th>開始</th>
+            <th>結束</th>
+            <th>操作</th>
+        </tr>
         {% for b in bookings %}
-            <tr>
-                <td>{{ b.name }}</td>
-                <td>{{ b.user }}</td>
-                <td>{{ b.date }}</td>
-                <td>{{ b.start_time }}</td>
-                <td>{{ b.end_time }}</td>
-                <td>
-                    {% if role == 'admin' or b.user == username %}
-                        <a href="/edit/{{ b.id }}" class="btn btn-warning btn-sm">修改</a>
-                        <a href="/delete/{{ b.id }}" class="btn btn-danger btn-sm">刪除</a>
-                    {% else %}
-                        <span class="text-muted">無權限</span>
-                    {% endif %}
-                </td>
-            </tr>
+        <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.user }}</td>
+            <td>{{ b.title }}</td>
+            <td>{{ b.date }}</td>
+            <td>{{ b.start_time }}</td>
+            <td>{{ b.end_time }}</td>
+            <td>
+                {% if role == "admin" or b.user == username %}
+                    <a href="{{ url_for('edit_booking', booking_id=b.id) }}">修改</a> |
+                    <a href="{{ url_for('delete_booking', booking_id=b.id) }}">刪除</a>
+                {% else %}
+                    <span class="disabled">無權限</span>
+                {% endif %}
+            </td>
+        </tr>
         {% endfor %}
-        </tbody>
-
     </table>
-</div>
 
+    <div class="links">
+        <a href="{{ url_for('index') }}">回到新增預約</a> |
+        <a href="{{ url_for('logout') }}">登出</a>
+    </div>
+</div>
 </body>
 </html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>預約列表</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>預約列表</h1>
+
+<table>
+    <tr>
+        <th>日期</th>
+        <th>時段</th>
+        <th>姓名</th>
+    </tr>
+
+    {% for b in bookings %}
+    <tr>
+        <td>{{ b.date }}</td>
+        <td>{{ b.time }}</td>
+        <td>{{ b.name }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p><a href="/">返回預約頁</a></p>
+
+</body>
+</html>

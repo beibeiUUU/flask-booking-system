@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>電腦預約系統</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h1>電腦預約系統</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="msg">
+      {% for msg in messages %}
+        <p>{{ msg }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<form method="post">
+    <input type="text" name="name" placeholder="姓名" required>
+    <input type="date" name="date" required>
+
+    <select name="time">
+        <option>08:00-10:00</option>
+        <option>10:00-12:00</option>
+        <option>13:00-15:00</option>
+        <option>15:00-17:00</option>
+    </select>
+
+    <button type="submit">送出預約</button>
+</form>
+
+<p><a href="/list">查看預約列表</a></p>
+
+</body>
+</html>
